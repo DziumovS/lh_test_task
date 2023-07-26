@@ -2,9 +2,7 @@ from validators import validate_value
 
 
 def fields_value_structure_matching(form, data):
-    """
-        Проверяем соответствуют ли значения во входящих данных формату значений в соответствующей форме
-    """
+    """ Проверяем соответствуют ли значения во входящих данных формату значений в соответствующей форме """
     for key, value in form.items():
         if key == "name":
             continue
@@ -14,9 +12,7 @@ def fields_value_structure_matching(form, data):
 
 
 def fields_key_matching(form, data):
-    """
-        Проверяем есть ли в шаблонах форм хотя бы одна соответствующая форма по ключам
-    """
+    """ Проверяем есть ли в шаблонах форм хотя бы одна соответствующая форма по ключам """
     for key in form:
         if key == "name":
             continue
@@ -26,9 +22,7 @@ def fields_key_matching(form, data):
 
 
 def get_fields_list_and_they_types(data):
-    """
-        Проводим на лету типизацию полей и возвращаем список полей с их типами
-    """
+    """ Проводим на лету типизацию полей и возвращаем список полей с их типами """
     result = {}
     for key in data:
         if validate_value["date"](data[key]):
@@ -45,6 +39,7 @@ def get_fields_list_and_they_types(data):
 
 
 def get_form_name(forms, data):
+    """ Определяем имя формы """
     name = None
     for form in forms:
         if not fields_key_matching(form, data):
