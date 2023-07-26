@@ -5,5 +5,5 @@
 3) > python -m venv venv
 4) > source venv/bin/activate
 5) > pip install -r requirements.txt
-6) > pytest / python test_app.py
+6) > pytest (or: python test_app.py)
 7) > python main.py
