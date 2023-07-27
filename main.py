@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route("/get_form", methods=["POST"])
 def get_form():
-    data = request.json
+    data = request.form.to_dict()
     forms_from_db = db.all()
     form_name = get_form_name(forms_from_db, data)
     if form_name:
