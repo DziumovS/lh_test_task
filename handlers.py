@@ -1,22 +1,22 @@
-from validators import validate_value
+from validators import is_valid_date, is_valid_phone, is_valid_email
 
 
-def fields_value_structure_matching(form, data):
+def fields_value_structure_matching(form, data, validate_value_func):
     """ Проверяем соответствуют ли значения во входящих данных формату значений в соответствующей форме """
     for key, value in form.items():
         if key == "name":
             continue
-        if not validate_value[value](data[key]):
+        if not validate_value_func(value, data.get(key)):
             return False
     return True
 
 
-def fields_key_matching(form, data):
+def fields_key_matching(form, data_keys):
     """ Проверяем есть ли в шаблонах форм хотя бы одна соответствующая форма по ключам """
     for key in form:
         if key == "name":
             continue
-        if key not in data:
+        if key not in data_keys:
             return False
     return True
 
@@ -24,28 +24,36 @@ def fields_key_matching(form, data):
 def get_fields_list_and_they_types(data):
     """ Проводим на лету типизацию полей и возвращаем список полей с их типами """
     result = {}
-    for key in data:
-        if validate_value["date"](data[key]):
+    for key, value in data.items():
+        if is_valid_date(value):
             result[key] = "date"
-            continue
-        if validate_value["phone"](data[key]):
+        elif is_valid_phone(value):
             result[key] = "phone"
-            continue
-        if validate_value['email'](data[key]):
+        elif is_valid_email(value):
             result[key] = "email"
-            continue
-        result[key] = "text"
+        else:
+            result[key] = "text"
     return result
 
 
 def get_form_name(forms, data):
     """ Определяем имя формы """
-    name = None
+    data_keys = set(data.keys())  # Сохраняем ключи данных для использования в fields_key_matching
+
     for form in forms:
-        if not fields_key_matching(form, data):
+        if not fields_key_matching(form, data_keys):
             continue
-        else:
-            if fields_value_structure_matching(form, data):
-                name = form["name"]
-                break
-    return name
+        if fields_value_structure_matching(form, data, validate_value):
+            return form["name"]
+    return None
+
+
+def validate_value(value_type, value):
+    """ Проверяем значение в соответствии с типом """
+    if value_type == "date":
+        return is_valid_date(value)
+    elif value_type == "phone":
+        return is_valid_phone(value)
+    elif value_type == "email":
+        return is_valid_email(value)
+    return True
