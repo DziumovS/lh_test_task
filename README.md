@@ -10,6 +10,9 @@ To run:
   ```bash
   docker compose up -d
   ```
+  ```bash
+  python sending_test_requests.py
+  ```
 
 The tests are located in test_app.py.
 
@@ -44,6 +47,9 @@ if you're an oldfag you also can use this:
   ```
   ```bash
   python main.py
+  ```
+  ```bash
+  python sending_test_requests.py
   ```
   
 </details>
