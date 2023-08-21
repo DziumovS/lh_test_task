@@ -14,15 +14,15 @@ email_pattern = re.compile(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
 
 
 def is_valid_date(date):
-    """ Проверяем соответствует ли дата формату DD.MM.YYYY или YYYY-MM-DD """
+    """ Check if the date corresponds to the format DD.MM.YYYY or YYYY-MM-DD """
     return bool(date_pattern.match(date))
 
 
 def is_valid_phone(phone_number):
-    """ Проверяем соответствует ли номер телефона маске: +7 xxx xxx xx xx """
+    """ Check if the phone number matches the mask: +7 xxx xxx xx xx """
     return bool(phone_pattern.match(phone_number))
 
 
 def is_valid_email(email):
-    """ Проверяем соответствует ли email маске: x@x.xx """
+    """ Check if the email matches the email mask: x@x.xx """
     return bool(email_pattern.match(email))

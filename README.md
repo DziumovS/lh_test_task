@@ -11,7 +11,12 @@ To run:
   docker compose up -d
   ```
 
-The application container is deployed in the background on port 5000 if all tests pass successfully.
+The tests are located in test_app.py.
+
+If all tests pass successfully, the application container is deployed in the background on port 5000.
+
+You can send test requests, for example, via Postman with content-type: x-www-form-urlencoded. Or use sending_test_requests.py.
+
 
 ---
 <details>

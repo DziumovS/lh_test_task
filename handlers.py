@@ -2,7 +2,7 @@ from validators import is_valid_date, is_valid_phone, is_valid_email
 
 
 def fields_value_structure_matching(form, data, validate_value_func):
-    """ Проверяем соответствуют ли значения во входящих данных формату значений в соответствующей форме """
+    """ Check whether the values in the incoming data correspond to the format of values in the corresponding form """
     for key, value in form.items():
         if key == "name":
             continue
@@ -12,7 +12,7 @@ def fields_value_structure_matching(form, data, validate_value_func):
 
 
 def fields_key_matching(form, data_keys):
-    """ Проверяем есть ли в шаблонах форм хотя бы одна соответствующая форма по ключам """
+    """ Check if there is at least one corresponding form by keys in the form templates """
     for key in form:
         if key == "name":
             continue
@@ -22,7 +22,7 @@ def fields_key_matching(form, data_keys):
 
 
 def get_fields_list_and_they_types(data):
-    """ Проводим на лету типизацию полей и возвращаем список полей с их типами """
+    """ On-the-fly typing of fields and return a list of fields with their types """
     result = {}
     for key, value in data.items():
         if is_valid_date(value):
@@ -37,8 +37,8 @@ def get_fields_list_and_they_types(data):
 
 
 def get_form_name(forms, data):
-    """ Определяем имя формы """
-    data_keys = set(data.keys())  # Сохраняем ключи данных для использования в fields_key_matching
+    """ Define the name of the form """
+    data_keys = set(data.keys())  # Save data keys for use in fields_key_matching
 
     for form in forms:
         if not fields_key_matching(form, data_keys):
@@ -49,7 +49,7 @@ def get_form_name(forms, data):
 
 
 def validate_value(value_type, value):
-    """ Проверяем значение в соответствии с типом """
+    """ Check the value according to the type """
     if value_type == "date":
         return is_valid_date(value)
     elif value_type == "phone":
