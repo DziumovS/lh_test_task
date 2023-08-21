@@ -11,7 +11,7 @@ To run:
   docker compose up -d
   ```
 
-The container with the application is deployed in the background if all tests are successful.
+The application container is deployed in the background on port 5000 if all tests pass successfully.
 
 ---
 <details>
