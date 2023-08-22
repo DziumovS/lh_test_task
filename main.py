@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from tinydb import TinyDB
-from handlers import get_fields_list_and_they_types, get_form_name
+from form_utils import get_fields_list_and_they_types, get_form_name
 
 
 db = TinyDB('db.json')

@@ -1,12 +1,27 @@
-from validators import is_valid_date, is_valid_phone, is_valid_email
+from patterns import DATE_PATTERN, PHONE_PATTERN, EMAIL_PATTERN
 
 
-def fields_value_structure_matching(form, data, validate_value_func):
+VALIDATION_FUNCTIONS = {
+    "date": lambda x: bool(DATE_PATTERN.match(x)),
+    "phone": lambda x: bool(PHONE_PATTERN.match(x)),
+    "email": lambda x: bool(EMAIL_PATTERN.match(x))
+}
+
+
+TYPE_MAPPING = {
+    "date": "date",
+    "phone": "phone",
+    "email": "email"
+}
+
+
+def fields_value_structure_matching(form, data):
     """ Check whether the values in the incoming data correspond to the format of values in the corresponding form """
     for key, value in form.items():
         if key == "name":
             continue
-        if not validate_value_func(value, data.get(key)):
+        validation_function = VALIDATION_FUNCTIONS.get(value, lambda x: True)
+        if not validation_function(data.get(key)):
             return False
     return True
 
@@ -25,14 +40,8 @@ def get_fields_list_and_they_types(data):
     """ On-the-fly typing of fields and return a list of fields with their types """
     result = {}
     for key, value in data.items():
-        if is_valid_date(value):
-            result[key] = "date"
-        elif is_valid_phone(value):
-            result[key] = "phone"
-        elif is_valid_email(value):
-            result[key] = "email"
-        else:
-            result[key] = "text"
+        display_type = TYPE_MAPPING.get(value, "text")
+        result[key] = display_type
     return result
 
 
@@ -43,17 +52,12 @@ def get_form_name(forms, data):
     for form in forms:
         if not fields_key_matching(form, data_keys):
             continue
-        if fields_value_structure_matching(form, data, validate_value):
+        if fields_value_structure_matching(form, data):
             return form["name"]
     return None
 
 
 def validate_value(value_type, value):
     """ Check the value according to the type """
-    if value_type == "date":
-        return is_valid_date(value)
-    elif value_type == "phone":
-        return is_valid_phone(value)
-    elif value_type == "email":
-        return is_valid_email(value)
-    return True
+    validation_function = VALIDATION_FUNCTIONS.get(value_type, lambda x: True)
+    return validation_function(value)
