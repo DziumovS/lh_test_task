@@ -12,7 +12,7 @@ def insert_test_forms(db_instance):
         "phone": "phone"
     })
     db_instance.insert({
-        "name": "passport_form",
+        "name": "Passport_form",
         "username": "text",
         "email": "email",
         "phone_number": "phone",
