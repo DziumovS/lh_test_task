@@ -8,7 +8,36 @@ base_url = "http://localhost:5000"
 faker = Faker()
 
 
-def generate_test_data():
+forms_in_database = {
+    0: {
+        "name": "Order_form",
+        "user_email": "email",
+        "user_phone": "phone",
+        "order_date": "date",
+        "description": "text"
+    },
+    1: {
+        "name": "MyForm",
+        "email": "email",
+        "phone": "phone"
+    },
+    2: {
+        "name": "Callback form",
+        "username": "text",
+        "phone_number": "phone"
+    },
+    3: {
+        "name": "passport_form",
+        "username": "text",
+        "email": "email",
+        "phone_number": "phone",
+        "date": "date",
+        "comment": "text"
+    }
+}
+
+
+def generate_random_test_data():
     test_data = []
     for _ in range(18):
         valid = random.choice([True, False])
@@ -28,7 +57,39 @@ def generate_test_data():
     return test_data
 
 
-test_data = generate_test_data()
+def generate_correct_test_data():
+    test_data = []
+    for _ in range(len(forms_in_database)):
+        correct_data = {
+            0: {
+                "user_email": "example@example.com",
+                "user_phone": "+7 123 456 78 90",
+                "order_date": "29.02.2023",
+                "description": "test description"
+            },
+            1: {
+                "email": "example@example.com",
+                "phone": "+7 123 456 78 90"
+            },
+            2: {
+                "username": "leadhit",
+                "email": "example@example.com",
+                "phone_number": "+7 123 456 78 90",
+                "date": "2023-01-01",
+                "comment": "test comment"
+            },
+            3: {
+                "username": "leadhit",
+                "phone_number": "+7 123 456 78 90"
+            }
+        }
+        test_data.append(correct_data[_])
+    return test_data
+
+
+
+test_data = generate_correct_test_data()
+#test_data = generate_random_test_data()
 
 
 for idx, data in enumerate(test_data, start=1):
